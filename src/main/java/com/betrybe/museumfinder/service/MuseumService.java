@@ -20,7 +20,7 @@ public class MuseumService implements MuseumServiceInterface {
 
   @Autowired
   public MuseumService(MuseumFakeDatabase museumDatabase) {
-    this.museumDatabase = museumDatabase;
+    this.museumDB = museumDatabase;
   }
 
   @Override
@@ -29,13 +29,12 @@ public class MuseumService implements MuseumServiceInterface {
       throw new InvalidCoordinateException();
     }
 
-  Optional<Museum> closestMuseumOptional = museumDatabase
-      .getClosestMuseum(coordinate, maxDistance);
+  Optional<Museum> closestMuseum = museumDB.getClosestMuseum(coordinate, km);
 
-    if (museum.isEmpty()) {
+    if (closestMuseum.isPresent()) {
+      retrun closestMuseum.get();
+    }
     throw new MuseumNotFoundException();
-  }
-    retrun
   }
 
   @Override

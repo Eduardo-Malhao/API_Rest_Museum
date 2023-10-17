@@ -2,25 +2,25 @@ package com.betrybe.museumfinder.service;
 
 import static com.betrybe.museumfinder.util.CoordinateUtil.isCoordinateValid;
 
+import com.betrybe.museumfinder.database.MuseumFakeDatabase;
 import com.betrybe.museumfinder.exception.InvalidCoordinateException;
 import com.betrybe.museumfinder.exception.MuseumNotFoundException;
-import java.util.Optional;
 import com.betrybe.museumfinder.model.Coordinate;
 import com.betrybe.museumfinder.model.Museum;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.betrybe.museumfinder.database.MuseumFakeDatabase;
 
 /**
- *  Java Type Method
+ *  Java Type Method.
  */
 @Service
 public class MuseumService implements MuseumServiceInterface {
-  private MuseumFakeDatabase museumDB;
+  private MuseumFakeDatabase museumFakeDb;
 
   @Autowired
   public MuseumService(MuseumFakeDatabase museumDatabase) {
-    this.museumDB = museumDatabase;
+    this.museumFakeDb = museumDatabase;
   }
 
   @Override
@@ -29,7 +29,7 @@ public class MuseumService implements MuseumServiceInterface {
       throw new InvalidCoordinateException();
     }
 
-  Optional<Museum> closestMuseum = museumDB.getClosestMuseum(coordinate, km);
+    Optional<Museum> closestMuseum = museumFakeDb.getClosestMuseum(coordinate, km);
 
     if (closestMuseum.isPresent()) {
       retrun closestMuseum.get();
@@ -40,7 +40,7 @@ public class MuseumService implements MuseumServiceInterface {
   @Override
   public Museum createMuseum(Museum museum) {
     if (isCoordinateValid(museum.getCoordinate())) {
-      return museumDB.saveMuseum(museum);
+      return museumFakeDb.saveMuseum(museum);
     }
     throw new InvalidCoordinateException();
   }

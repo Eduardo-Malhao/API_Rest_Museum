@@ -6,6 +6,7 @@ import com.betrybe.museumfinder.dto.MuseumDto;
 import com.betrybe.museumfinder.model.Coordinate;
 import com.betrybe.museumfinder.model.Museum;
 import com.betrybe.museumfinder.service.MuseumService;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,6 +64,18 @@ public class MuseumController {
     } else {
       MuseumDto converter = ModelDtoConverter.modelToDto(getMuseum);
       return ResponseEntity.status(HttpStatus.OK).body(converter);
+    }
+  }
+
+  @GetMapping("{id}")
+  public ResponseEntity<MuseumDto> getById(Long id) {
+
+    Optional<Museum> findMuseum = museumService.getMuseum(id);
+    if (findMuseum.isEmpty()) {
+      return ResponseEntity.notFound().build();
+    } else {
+      MuseumDto converter = ModelDtoConverter.modelToDto(findMuseum);
+      return  ResponseEntity.status(HttpStatus.OK).body(converter);
     }
   }
 }

@@ -3,6 +3,7 @@ package com.betrybe.museumfinder.service;
 import static com.betrybe.museumfinder.util.CoordinateUtil.isCoordinateValid;
 
 import com.betrybe.museumfinder.database.MuseumFakeDatabase;
+import com.betrybe.museumfinder.exception.InvalidIdException;
 import com.betrybe.museumfinder.exception.InvalidCoordinateException;
 import com.betrybe.museumfinder.exception.MuseumNotFoundException;
 import com.betrybe.museumfinder.model.Coordinate;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class MuseumService implements MuseumServiceInterface {
-  private MuseumFakeDatabase museumFakeDatabase;
+  private final MuseumFakeDatabase museumFakeDatabase;
 
   @Autowired
   public MuseumService(MuseumFakeDatabase museumDatabase) {
@@ -46,7 +47,14 @@ public class MuseumService implements MuseumServiceInterface {
   }
 
   @Override
-  public Museum getMuseum(Long id) {
-    return null;
+  public Optional<Museum> getMuseum(Long id) {
+    if (isIdValid(id)) {
+      return museumFakeDatabase.getMuseum(id);
+    }
+    throw new InvalidIdException();
+  }
+
+  public Boolean isIdValid(Long id) {
+    return id > 0;
   }
 }

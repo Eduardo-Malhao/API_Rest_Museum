@@ -44,4 +44,9 @@ public class MuseumService implements MuseumServiceInterface {
     }
     throw new InvalidCoordinateException();
   }
+
+  @Override
+  public Museum getMuseum(Long id) {
+    return null;
+  }
 }

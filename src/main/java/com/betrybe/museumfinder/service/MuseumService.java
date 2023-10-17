@@ -32,7 +32,7 @@ public class MuseumService implements MuseumServiceInterface {
     Optional<Museum> closestMuseum = museumFakeDb.getClosestMuseum(coordinate, km);
 
     if (closestMuseum.isPresent()) {
-      retrun closestMuseum.get();
+      return closestMuseum.get();
     }
     throw new MuseumNotFoundException();
   }

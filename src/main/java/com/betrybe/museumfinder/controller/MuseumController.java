@@ -1,6 +1,6 @@
 package com.betrybe.museumfinder.controller;
 
-
+import com.betrybe.museumfinder.util.ModelDtoConverter;
 import com.betrybe.museumfinder.dto.MuseumCreationDto;
 import com.betrybe.museumfinder.dto.MuseumDto;
 import com.betrybe.museumfinder.model.Coordinate;
@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MuseumController {
 
   private final MuseumService museumService;
+  private final ModelDtoConverter museumDtoConverter;
 
   @Autowired
   public MuseumController(MuseumService museumService) {
@@ -37,25 +38,11 @@ public class MuseumController {
   @PostMapping
   public ResponseEntity<Museum> createMuseum(@RequestBody MuseumCreationDto museumDto) {
 
-    Museum newMuseum = converter(museumDto);
+    Museum converter = ModelDtoConverter.dtoToModel(museumDto);
 
-    Museum createNewMuseum = museumService.createMuseum(newMuseum);
+    Museum createNewMuseum = museumService.createMuseum(converter);
 
     return ResponseEntity.status(HttpStatus.CREATED).body(createNewMuseum);
-  }
-
-  private Museum converter(MuseumCreationDto data) {
-    Museum museumData = new Museum();
-
-    museumData.setName(data.name());
-    museumData.setDescription(data.description());
-    museumData.setAddress(data.address());
-    museumData.setCollectionType(data.collectionType());
-    museumData.setSubject(data.subject());
-    museumData.setUrl(data.url());
-    museumData.setCoordinate(data.coordinate());
-
-    return museumData;
   }
 
   /**
@@ -74,21 +61,8 @@ public class MuseumController {
     if (getMuseum == null) {
       return ResponseEntity.notFound().build();
     } else {
-      MuseumDto museumDto = modelToDto(getMuseum);
-      return ResponseEntity.status(HttpStatus.OK).body(museumDto);
+      MuseumDto converter = ModelDtoConverter.modelToDto(getMuseum);
+      return ResponseEntity.status(HttpStatus.OK).body(converter);
     }
-  }
-
-  private MuseumDto modelToDto(Museum model) {
-    return new MuseumDto(
-        model.getId(),
-        model.getName(),
-        model.getDescription(),
-        model.getAddress(),
-        model.getCollectionType(),
-        model.getSubject(),
-        model.getUrl(),
-        model.getCoordinate()
-    );
   }
 }

@@ -1,12 +1,12 @@
 package com.betrybe.museumfinder.controller;
 
-import com.betrybe.museumfinder.service.MuseumServiceInterface;
-import com.betrybe.museumfinder.util.ModelDtoConverter;
 import com.betrybe.museumfinder.dto.MuseumCreationDto;
 import com.betrybe.museumfinder.dto.MuseumDto;
 import com.betrybe.museumfinder.model.Coordinate;
 import com.betrybe.museumfinder.model.Museum;
 import com.betrybe.museumfinder.service.MuseumService;
+import com.betrybe.museumfinder.service.MuseumServiceInterface;
+import com.betrybe.museumfinder.util.ModelDtoConverter;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -67,6 +67,9 @@ public class MuseumController {
     }
   }
 
+  /**
+   * Java Doc Method.
+   */
   @GetMapping("/{id}")
   public ResponseEntity<MuseumDto> getById(Long id) {
 

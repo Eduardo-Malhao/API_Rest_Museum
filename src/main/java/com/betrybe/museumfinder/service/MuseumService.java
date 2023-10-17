@@ -3,8 +3,8 @@ package com.betrybe.museumfinder.service;
 import static com.betrybe.museumfinder.util.CoordinateUtil.isCoordinateValid;
 
 import com.betrybe.museumfinder.database.MuseumFakeDatabase;
-import com.betrybe.museumfinder.exception.InvalidIdException;
 import com.betrybe.museumfinder.exception.InvalidCoordinateException;
+import com.betrybe.museumfinder.exception.InvalidIdException;
 import com.betrybe.museumfinder.exception.MuseumNotFoundException;
 import com.betrybe.museumfinder.model.Coordinate;
 import com.betrybe.museumfinder.model.Museum;

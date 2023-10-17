@@ -1,5 +1,8 @@
 package com.betrybe.museumfinder.exception;
 
-public class InvalidIdException extends RuntimeException{
+/**
+ * Java Doc Method.
+ */
+public class InvalidIdException extends RuntimeException {
   public InvalidIdException() { }
 }

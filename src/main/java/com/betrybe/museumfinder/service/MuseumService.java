@@ -16,11 +16,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class MuseumService implements MuseumServiceInterface {
-  private MuseumFakeDatabase museumFakeDb;
+  private MuseumFakeDatabase museumFakeDatabase;
 
   @Autowired
   public MuseumService(MuseumFakeDatabase museumDatabase) {
-    this.museumFakeDb = museumDatabase;
+    this.museumFakeDatabase = museumDatabase;
   }
 
   @Override
@@ -29,7 +29,7 @@ public class MuseumService implements MuseumServiceInterface {
       throw new InvalidCoordinateException();
     }
 
-    Optional<Museum> closestMuseum = museumFakeDb.getClosestMuseum(coordinate, km);
+    Optional<Museum> closestMuseum = museumFakeDatabase.getClosestMuseum(coordinate, km);
 
     if (closestMuseum.isPresent()) {
       return closestMuseum.get();
@@ -40,7 +40,7 @@ public class MuseumService implements MuseumServiceInterface {
   @Override
   public Museum createMuseum(Museum museum) {
     if (isCoordinateValid(museum.getCoordinate())) {
-      return museumFakeDb.saveMuseum(museum);
+      return museumFakeDatabase.saveMuseum(museum);
     }
     throw new InvalidCoordinateException();
   }

@@ -1,5 +1,6 @@
 package com.betrybe.museumfinder.controller;
 
+import com.betrybe.museumfinder.service.MuseumServiceInterface;
 import com.betrybe.museumfinder.util.ModelDtoConverter;
 import com.betrybe.museumfinder.dto.MuseumCreationDto;
 import com.betrybe.museumfinder.dto.MuseumDto;
@@ -25,11 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/museums")
 public class MuseumController {
 
-  private final MuseumService museumService;
-  private final ModelDtoConverter museumDtoConverter;
+  private final MuseumServiceInterface museumService;
 
   @Autowired
-  public MuseumController(MuseumService museumService) {
+  public MuseumController(MuseumServiceInterface museumService) {
     this.museumService = museumService;
   }
 
@@ -49,7 +49,7 @@ public class MuseumController {
   /**
    * Java Doc Method.
    */
-  @GetMapping("closest")
+  @GetMapping("/closest")
   public ResponseEntity<MuseumDto> getClosestMuseum(
       @RequestParam("lat") Double latitude,
       @RequestParam("lng") Double longitude,
@@ -67,14 +67,14 @@ public class MuseumController {
     }
   }
 
-  @GetMapping("{id}")
+  @GetMapping("/{id}")
   public ResponseEntity<MuseumDto> getById(Long id) {
 
     Optional<Museum> findMuseum = museumService.getMuseum(id);
     if (findMuseum.isEmpty()) {
       return ResponseEntity.notFound().build();
     } else {
-      MuseumDto converter = ModelDtoConverter.modelToDto(findMuseum);
+      MuseumDto converter = ModelDtoConverter.modelToDto(findMuseum.get());
       return  ResponseEntity.status(HttpStatus.OK).body(converter);
     }
   }

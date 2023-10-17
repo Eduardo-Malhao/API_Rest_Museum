@@ -3,6 +3,7 @@ package com.betrybe.museumfinder.controller;
 
 import com.betrybe.museumfinder.dto.MuseumCreationDto;
 import com.betrybe.museumfinder.dto.MuseumDto;
+import com.betrybe.museumfinder.model.Coordinate;
 import com.betrybe.museumfinder.model.Museum;
 import com.betrybe.museumfinder.service.MuseumService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,4 +58,37 @@ public class MuseumController {
     return museumData;
   }
 
+  /**
+   * Java Doc Method.
+   */
+  @GetMapping("closest")
+  public ResponseEntity<MuseumDto> getClosestMuseum(
+      @RequestParam("lat") Double latitude,
+      @RequestParam("lng") Double longitude,
+      @RequestParam("max_dist_km") Double maxDistanceKm
+  ) {
+
+    Coordinate coordinate = new Coordinate(latitude, longitude);
+
+    Museum getMuseum = museumService.getClosestMuseum(coordinate, maxDistanceKm);
+    if (getMuseum == null) {
+      return ResponseEntity.notFound().build();
+    } else {
+      MuseumDto museumDto = modelToDto(getMuseum);
+      return ResponseEntity.status(HttpStatus.OK).body(museumDto);
+    }
+  }
+
+  private MuseumDto modelToDto(Museum model) {
+    return new MuseumDto(
+        model.getId(),
+        model.getName(),
+        model.getDescription(),
+        model.getAddress(),
+        model.getCollectionType(),
+        model.getSubject(),
+        model.getUrl(),
+        model.getCoordinate()
+    );
+  }
 }

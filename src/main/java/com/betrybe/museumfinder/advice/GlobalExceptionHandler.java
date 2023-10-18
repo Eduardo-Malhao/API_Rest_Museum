@@ -1,7 +1,6 @@
 package com.betrybe.museumfinder.advice;
 
 import com.betrybe.museumfinder.exception.InvalidCoordinateException;
-import com.betrybe.museumfinder.exception.InvalidIdException;
 import com.betrybe.museumfinder.exception.MuseumNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +21,6 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(InvalidCoordinateException.class)
   public ResponseEntity<String> handleServerError(InvalidCoordinateException ex) {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Coordenada inválida!");
-  }
-
-  @ExceptionHandler(InvalidIdException.class)
-  public ResponseEntity<String> handleBadRequest(InvalidIdException ex) {
-    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Id correspondente não encontrado!");
   }
 
   @ExceptionHandler(Exception.class)

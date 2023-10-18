@@ -4,7 +4,6 @@ import static com.betrybe.museumfinder.util.CoordinateUtil.isCoordinateValid;
 
 import com.betrybe.museumfinder.database.MuseumFakeDatabase;
 import com.betrybe.museumfinder.exception.InvalidCoordinateException;
-import com.betrybe.museumfinder.exception.InvalidIdException;
 import com.betrybe.museumfinder.exception.MuseumNotFoundException;
 import com.betrybe.museumfinder.model.Coordinate;
 import com.betrybe.museumfinder.model.Museum;
@@ -48,13 +47,6 @@ public class MuseumService implements MuseumServiceInterface {
 
   @Override
   public Museum getMuseum(Long id) {
-    if (isIdValid(id)) {
-      return museumFakeDatabase.getMuseum(id).get();
-    }
-    throw new InvalidIdException();
-  }
-
-  public Boolean isIdValid(Long id) {
-    return id > 0;
+    return museumFakeDatabase.getMuseum(id).get();
   }
 }

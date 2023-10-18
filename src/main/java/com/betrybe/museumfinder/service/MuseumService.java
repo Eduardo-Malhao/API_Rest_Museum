@@ -47,9 +47,9 @@ public class MuseumService implements MuseumServiceInterface {
   }
 
   @Override
-  public Optional<Museum> getMuseum(Long id) {
+  public Museum getMuseum(Long id) {
     if (isIdValid(id)) {
-      return museumFakeDatabase.getMuseum(id);
+      return museumFakeDatabase.getMuseum(id).get();
     }
     throw new InvalidIdException();
   }

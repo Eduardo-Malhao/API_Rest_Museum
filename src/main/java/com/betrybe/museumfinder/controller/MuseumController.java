@@ -73,11 +73,11 @@ public class MuseumController {
   @GetMapping("/{id}")
   public ResponseEntity<MuseumDto> getById(Long id) {
 
-    Optional<Museum> findMuseum = museumService.getMuseum(id);
-    if (findMuseum.isEmpty()) {
+    Museum findMuseum = museumService.getMuseum(id);
+    if (findMuseum == null) {
       return ResponseEntity.notFound().build();
     } else {
-      MuseumDto converter = ModelDtoConverter.modelToDto(findMuseum.get());
+      MuseumDto converter = ModelDtoConverter.modelToDto(findMuseum);
       return  ResponseEntity.status(HttpStatus.OK).body(converter);
     }
   }

@@ -13,5 +13,5 @@ public interface MuseumServiceInterface {
 
   Museum createMuseum(Museum museum);
 
-  Optional<Museum> getMuseum(Long id);
+  Museum getMuseum(Long id);
 }
